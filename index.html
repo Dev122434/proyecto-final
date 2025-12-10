@@ -1,117 +1,313 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Perfil Profesional</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi Perfil Profesional — Marcos Cardenas</title>
+  <meta name="description" content="Portafolio profesional — desarrollador frontend. Proyectos, habilidades y contacto." />
+
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Enlace a Google Fonts para usar Poppins -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome para los íconos -->
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
   <style>
-    /* Estilos adicionales para el carrusel */
-    .carousel-item {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100px;
-      font-size: 1.25rem;
-      font-weight: 600;
-      background-color: #f3f4f6;
-      border-radius: 0.375rem;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    :root { --glass: rgba(255,255,255,0.06); }
+    [data-theme="dark"] { --card-bg: rgba(255,255,255,0.04); }
+    [data-theme="light"] { --card-bg: rgba(255,255,255,0.9); }
+
+    /* pequeño efecto para los badges */
+    .badge-glow {
+      box-shadow: 0 6px 18px rgba(79,70,229,0.18);
     }
 
-    /* Estilos para el modo oscuro */
-    .dark-mode {
-      background-color: #1a202c; /* Fondo oscuro */
-      color: #edf2f7; /* Texto claro */
-    }
+    /* carrusel sencillo (solo para móviles como ejemplo) */
+    .carousel-item { min-width: 80%; }
 
-    .dark-mode .bg-white {
-      background-color: #2d3748; /* Fondo oscuro para elementos internos */
-    }
+    /* accesibilidad: focus visible personalizado */
+    :focus { outline: 3px solid rgba(99,102,241,0.18); outline-offset: 2px; }
 
-    .dark-mode .bg-blue-600 {
-      background-color: #2b6cb0; /* Fondo azul oscuro */
-    }
-
-    .dark-mode .text-gray-800 {
-      color: #e2e8f0; /* Texto claro */
-    }
-
-    .dark-mode .text-indigo-700 {
-      color: #c3dafe; /* Texto azul claro */
-    }
-
-    .dark-mode .bg-indigo-600 {
-      background-color: #4c51bf; /* Fondo de botón en modo oscuro */
-    }
   </style>
-
 </head>
-<body class="bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-700 text-white font-sans">
+<body data-theme="light" class="font-sans antialiased bg-gradient-to-br from-sky-600 via-indigo-600 to-purple-700 text-slate-800 min-h-screen">
 
   <!-- Header -->
-  <header class="p-6 shadow-md bg-transparent">
-    <nav class="flex justify-between items-center max-w-screen-xl mx-auto">
-      <a href="index.html" class="text-3xl font-bold text-white hover:text-gray-200 transition duration-300">Mi Perfil</a>
-      <ul class="flex space-x-6 text-lg">
-        <li><a href="index.html" class="hover:text-gray-200 transition duration-300">Inicio</a></li>
-        <li><a href="sobre-mi.html" class="hover:text-gray-200 transition duration-300">Sobre Mí</a></li>
-        <li><a href="portafolio.html" class="hover:text-gray-200 transition duration-300">Portafolio</a></li>
-        <li><a href="contacto.html" class="hover:text-gray-200 transition duration-300">Contacto</a></li>
-      </ul>
+  <header class="max-w-7xl mx-auto p-6 flex items-center justify-between">
+    <a href="#home" class="flex items-center gap-3 text-white">
+      <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shadow-md">
+        <i class="fas fa-laptop-code"></i>
+      </div>
+      <span class="text-xl font-semibold">Mi Perfil</span>
+    </a>
 
-      <!-- Switch para modo oscuro -->
-      <button id="theme-toggle" class="p-2 rounded-full bg-gray-800 text-white">
-        <i class="fas fa-moon"></i>
-      </button>
+    <nav class="hidden md:flex items-center gap-6 text-white/90">
+      <a href="#about" class="hover:underline">Sobre mí</a>
+      <a href="#skills" class="hover:underline">Habilidades</a>
+      <a href="#projects" class="hover:underline">Proyectos</a>
+      <a href="#contact" class="hover:underline">Contacto</a>
     </nav>
+
+    <div class="flex items-center gap-3">
+      <button id="theme-toggle" aria-label="Alternar tema" class="p-2 rounded-full bg-white/10 text-white shadow-sm hover:bg-white/20">
+        <i id="theme-icon" class="fas fa-moon"></i>
+      </button>
+
+      <button id="menu-btn" aria-label="Abrir menú" class="md:hidden p-2 rounded-md bg-white/10 text-white">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
   </header>
 
-  <!-- Main Section -->
-  <main class="flex justify-center items-center min-h-screen bg-opacity-50 backdrop-blur-lg">
-    <div class="text-center p-8 bg-white bg-opacity-80 rounded-lg shadow-xl max-w-lg w-full">
-      <img src="https://via.placeholder.com/150" alt="Foto de perfil" class="w-40 h-40 rounded-full mx-auto mb-6 border-4 border-indigo-600 shadow-lg">
-      <h1 class="text-4xl font-extrabold mb-4 text-indigo-700">Aquí va tu nombre completo</h1>
-      <p class="text-xl mb-4 text-gray-700">Desarrollador Backend</p>
-      <p class="text-lg text-gray-800">¡Bienvenido a mi perfil! Soy un apasionado de la tecnología y el desarrollo backend. Aquí podrás ver mis proyectos, aprender más sobre mí y contactar conmigo. ¡Explora y conecta!</p>
-      
-      <!-- CTA Button -->
-      <a href="contacto.html" class="mt-6 inline-block px-6 py-3 bg-indigo-600 text-white font-semibold rounded-full shadow-md hover:bg-indigo-700 transition duration-300">Contáctame</a>
+  <!-- Hero -->
+  <section id="home" class="max-w-6xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-10">
+
+      <div class="text-white">
+        <p class="inline-block px-3 py-1 rounded-full bg-white/10 text-sm mb-4">Desarrollador Frontend</p>
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Hola, soy <span class="text-yellow-300">Marcos Cardenas</span><br class="hidden md:inline"/> — construyo servicios robustos y escalables.</h1>
+        <p class="mt-4 text-lg text-white/90">Me especializo en diseñar paginas webs, optimizar rendimiento y automatizar despliegues. Trabajo con HTMl, CSS, JavaScript y Tailwind.</p>
+
+        <div class="mt-6 flex gap-3">
+          <a href="#projects" class="inline-flex items-center gap-2 px-5 py-3 bg-white text-indigo-700 font-semibold rounded-full shadow badge-glow hover:scale-105 transition-transform">Ver proyectos <i class="fas fa-arrow-right"></i></a>
+          <a href="#contact" class="inline-flex items-center gap-2 px-5 py-3 bg-transparent border border-white/30 text-white rounded-full hover:bg-white/10 transition">Contactar</a>
+        </div>
+
+        <div class="mt-6 flex items-center gap-4">
+          <a href="#" class="text-white/90 hover:text-white" aria-label="GitHub"><i class="fab fa-github fa-lg"></i></a>
+          <a href="#" class="text-white/90 hover:text-white" aria-label="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a>
+          <a href="#" class="text-white/90 hover:text-white" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+        </div>
+      </div>
+
+      <div class="relative flex justify-center">
+        <div class="w-64 h-64 md:w-72 md:h-72 rounded-full bg-white shadow-2xl overflow-hidden transform rotate-3">
+          <img src="https://img.freepik.com/fotos-premium/crea-vector-estilo-plano-persona-personalizando-su-avatar-virtual_1031523-17490.jpg" alt="Foto de perfil" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Card de info rapido -->
+        <div class="absolute bottom-0 right-0 translate-x-6 translate-y-12 bg-white/95 rounded-xl p-4 shadow-lg w-64 backdrop-blur-sm">
+          <p class="text-sm text-slate-600">Ubicación</p>
+          <p class="font-semibold">León - Gto, México</p>
+          <div class="mt-3 flex gap-2 text-sm text-slate-600">
+            <div class="flex-1">
+              <p class="font-semibold">5+</p>
+              <p class="text-xs">Años exp.</p>
+            </div>
+            <div class="flex-1">
+              <p class="font-semibold">20+</p>
+              <p class="text-xs">Proyectos</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
-  </main>
+  </section>
+
+  <!-- Sobre mí -->
+  <section id="about" class="max-w-6xl mx-auto px-6 py-10">
+    <div class="bg-white/90 rounded-2xl p-8 shadow-lg grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="md:col-span-2">
+        <h2 class="text-2xl font-bold text-slate-800">Sobre mí</h2>
+        <p class="mt-3 text-slate-700">Soy desarrollador frontend con experiencia en diseño de paginas webs. Me interesa orientar los proyectos usando la arquitectura de software adeacuada y que el codigo sea reutilizable.</p>
+
+        <ul class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-700">
+          <li class="flex items-start gap-3"><i class="fas fa-check-circle text-indigo-600 mt-1"></i> Diseño de arquitecturas escalables</li>
+          <li class="flex items-start gap-3"><i class="fas fa-check-circle text-indigo-600 mt-1"></i> Integración continua y despliegue automatizado</li>
+          <li class="flex items-start gap-3"><i class="fas fa-check-circle text-indigo-600 mt-1"></i> Testing y TDD</li>
+          <li class="flex items-start gap-3"><i class="fas fa-check-circle text-indigo-600 mt-1"></i> Monitorización y alertas</li>
+        </ul>
+
+      </div>
+
+      <div class="bg-white rounded-xl p-4 flex flex-col items-center justify-center" style="background: var(--card-bg)">
+        <h3 class="text-slate-800 font-semibold">Contacto rápido</h3>
+        <p class="text-slate-600 text-sm mt-2">¿Tienes un proyecto? Escríbeme:</p>
+        <a href="#contact" class="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg">Enviar mensaje</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Habilidades -->
+  <section id="skills" class="max-w-6xl mx-auto px-6 py-10">
+    <h2 class="text-white text-2xl font-bold mb-6">Habilidades</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white/90 rounded-2xl p-6 shadow-lg">
+        <h3 class="font-semibold text-slate-800">Lenguajes y frameworks</h3>
+        <div class="mt-4 space-y-4">
+          <div>
+            <div class="flex justify-between mb-1 text-sm text-slate-600"><span>HTML</span><span>90%</span></div>
+            <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden"><div class="h-2 rounded-full" style="width:90%; background:linear-gradient(90deg,#6366f1,#8b5cf6)"></div></div>
+          </div>
+
+          <div>
+            <div class="flex justify-between mb-1 text-sm text-slate-600"><span>CSS - Tailwind</span><span>80%</span></div>
+            <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden"><div class="h-2 rounded-full" style="width:80%; background:linear-gradient(90deg,#6366f1,#8b5cf6)"></div></div>
+          </div>
+
+          <div>
+            <div class="flex justify-between mb-1 text-sm text-slate-600"><span>JavaScript</span><span>85%</span></div>
+            <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden"><div class="h-2 rounded-full" style="width:85%; background:linear-gradient(90deg,#6366f1,#8b5cf6)"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white/90 rounded-2xl p-6 shadow-lg">
+        <h3 class="font-semibold text-slate-800">DevOps & Observabilidad</h3>
+        <ul class="mt-4 text-slate-700 space-y-2">
+          <li class="flex items-center gap-3"><i class="fas fa-tools text-indigo-600"></i> Docker, Kubernetes (Básico-Intermedio)</li>
+          <li class="flex items-center gap-3"><i class="fas fa-cloud text-indigo-600"></i> CI/CD (GitHub Actions / GitLab CI)</li>
+          <li class="flex items-center gap-3"><i class="fas fa-search" ></i> Logs y métricas (Prometheus / Grafana)</li>
+          <li class="flex items-center gap-3"><i class="fas fa-lock"></i> Seguridad: OWASP basics</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proyectos -->
+  <section id="projects" class="max-w-6xl mx-auto px-6 py-10">
+    <h2 class="text-white text-2xl font-bold mb-6">Proyectos destacados</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <article class="bg-white/95 rounded-2xl p-4 shadow hover:shadow-xl transform hover:-translate-y-1 transition">
+        <h3 class="mt-3 font-semibold text-slate-800">Tarjeta De Perfil</h3>
+        <p class="text-sm text-slate-600 mt-2">Diseñé una tarjeta de perfil con la ayuda de Claude Code</p>
+        <div class="mt-4 flex gap-2">
+          <a href="https://github.com/Dev122434/proyecto-tailwind/blob/main/card.html" target="_blank" class="text-sm px-3 py-2 rounded-md border border-slate-200">Código</a>
+          <a href="https://dev122434.github.io/proyecto-tailwind/card.html" target="_blank" class="text-sm px-3 py-2 rounded-md bg-indigo-600 text-white">Ver demo</a>
+        </div>
+      </article>
+
+      <article class="bg-white/95 rounded-2xl p-4 shadow hover:shadow-xl transform hover:-translate-y-1 transition">
+        <h3 class="mt-3 font-semibold text-slate-800">Dashboard</h3>
+        <p class="text-sm text-slate-600 mt-2">Diseñe un dashboard con la ayuda de Claude Code.</p>
+        <div class="mt-4 flex gap-2">
+          <a href="https://github.com/Dev122434/proyecto-tailwind/blob/main/dashboard.html" target="_blank" class="text-sm px-3 py-2 rounded-md border border-slate-200">Código</a>
+          <a href="https://dev122434.github.io/proyecto-tailwind/dashboard.html" target="_blank" class="text-sm px-3 py-2 rounded-md bg-indigo-600 text-white">Demo</a>
+        </div>
+      </article>
+
+      <article class="bg-white/95 rounded-2xl p-4 shadow hover:shadow-xl transform hover:-translate-y-1 transition">
+        <h3 class="mt-3 font-semibold text-slate-800">Formulario</h3>
+        <p class="text-sm text-slate-600 mt-2">Formulario con Validaciones.</p>
+        <div class="mt-4 flex gap-2">
+          <a href="https://github.com/Dev122434/repositorio-formularios/blob/main/formulario/formulario.html" target="_blank" class="text-sm px-3 py-2 rounded-md border border-slate-200">Código</a>
+          <a href="https://dev122434.github.io/repositorio-formularios/formulario/formulario.html" target="_blank" class="text-sm px-3 py-2 rounded-md bg-indigo-600 text-white">Demo</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contact" class="max-w-6xl mx-auto px-6 py-10">
+    <div class="bg-white/95 rounded-2xl p-8 shadow grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <h2 class="text-slate-800 text-2xl font-bold">Hablemos de tu proyecto</h2>
+        <p class="mt-3 text-slate-600">Rellena el formulario y te responderé en menos de 48 horas.</p>
+
+        <div class="mt-6 space-y-4">
+          <div class="flex items-center gap-3 text-slate-700"><i class="fas fa-envelope"></i> hola@ejemplo.com</div>
+          <div class="flex items-center gap-3 text-slate-700"><i class="fas fa-phone"></i> +52 55 1234 5678</div>
+          <div class="flex items-center gap-3 text-slate-700"><i class="fas fa-map-marker-alt"></i> Ciudad, País</div>
+        </div>
+
+      </div>
+
+      <form id="contact-form" class="space-y-4" onsubmit="return handleSubmit(event)">
+        <div>
+          <label class="text-sm text-slate-700">Nombre</label>
+          <input required type="text" name="name" class="w-full mt-1 p-3 rounded-lg border border-slate-200" placeholder="Tu nombre" />
+        </div>
+        <div>
+          <label class="text-sm text-slate-700">Correo</label>
+          <input required type="email" name="email" class="w-full mt-1 p-3 rounded-lg border border-slate-200" placeholder="tu@correo.com" />
+        </div>
+        <div>
+          <label class="text-sm text-slate-700">Mensaje</label>
+          <textarea required name="message" rows="4" class="w-full mt-1 p-3 rounded-lg border border-slate-200" placeholder="Cuéntame sobre tu proyecto..."></textarea>
+        </div>
+        <div class="flex justify-end">
+          <button type="submit" class="px-5 py-3 bg-indigo-600 text-white rounded-lg">Enviar mensaje</button>
+        </div>
+      </form>
+    </div>
+  </section>
 
   <!-- Footer -->
-  <footer class="bg-indigo-600 text-center py-6 mt-12 text-white">
-    <p>© 2025 Mi Perfil Profesional. Todos los derechos reservados.</p>
+  <footer class="mt-12 text-white/90 py-6 border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p>© <span id="year"></span>Marcos Cardenas. Todos los derechos reservados.</p>
+      <div class="flex items-center gap-4">
+        <a href="#" class="text-white/80">Política de privacidad</a>
+        <a href="#" class="text-white/80">Términos</a>
+      </div>
+    </div>
   </footer>
 
   <script>
-    // Función para alternar entre modo claro y oscuro
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const currentTheme = localStorage.getItem('theme');
-    
-    // Si ya se guardó el tema, aplicarlo
-    if (currentTheme) {
-      document.body.classList.add(currentTheme);
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // tema (localStorage)
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const root = document.documentElement;
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        document.body.classList.remove('bg-gradient-to-br');
+        document.body.style.background = '#0f172a';
+        document.body.style.color = '#e6eef8';
+        document.body.setAttribute('data-theme','dark');
+        themeIcon.className = 'fas fa-sun';
+      } else {
+        document.body.style.background = '';
+        document.body.classList.add('bg-gradient-to-br');
+        document.body.setAttribute('data-theme','light');
+        themeIcon.className = 'fas fa-moon';
+      }
     }
 
-    // Alternar entre el modo claro y oscuro
-    themeToggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-      // Guardar la preferencia en localStorage
-      if (document.body.classList.contains('dark-mode')) {
-        localStorage.setItem('theme', 'dark-mode');
-      } else {
-        localStorage.removeItem('theme');
-      }
+    const stored = localStorage.getItem('theme');
+    if (stored) applyTheme(stored);
+
+    themeToggle.addEventListener('click', () => {
+      const current = document.body.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', next);
+      applyTheme(next);
     });
+
+    // formulario: simulación de envío
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+      setTimeout(() => {
+        alert('Mensaje enviado. ¡Gracias!');
+        e.target.reset();
+        btn.disabled = false;
+        btn.textContent = 'Enviar mensaje';
+      }, 900);
+      return false;
+    }
+
+    // menu móvil
+    const menuBtn = document.getElementById('menu-btn');
+    menuBtn.addEventListener('click', () => {
+      const nav = document.querySelector('nav');
+      nav.classList.toggle('hidden');
+    });
+
   </script>
 
 </body>
